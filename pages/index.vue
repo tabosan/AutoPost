@@ -3,15 +3,16 @@
         <div class="input_field">
         <h1>同時投稿くん</h1>
         <label>
-            <p>Bluesky ID</p>
+            <p>Bluesky ID ※@は抜いて、bskyから後も入力してください！※</p>
             <input type="text" v-model="bs_id">
-            <p>Bluesky Password</p>
+            <p>Bluesky パスワード</p>
             <input type="password" v-model="bs_pw">
             <p>投稿する内容</p>
             <textarea name="post_content" cols="25" rows="12" v-model="ct"></textarea>
-            <p>Blueskyは自動で投稿するから最終確認して</p>
+            <p>Blueskyは自動で投稿するから最終確認してくださいね</p>
             <button @click="btClicked">投稿する</button>
         </label>
+        <div class="er_log" id="er_log"></div>
         <p></p><a href="https://twitter.com/tttaaayou">作者のXを見る</a>
         </div>
     </div>
@@ -33,8 +34,11 @@ import {BskyAgent} from "@atproto/api"
 
                 if(!this.bs_id || !this.bs_pw || !this.ct) {
                     console.log("入力されていない値があるよ")
+                    document.getElementById('er_log').innerHTML = "<p>入力されていない箇所があります</p>";
                 }
                 else {
+                    document.getElementById('er_log').innerHTML = "";
+
                     console.log("bs_id: " + this.bs_id)
                     console.log("bs_pw: " + this.bs_pw)
                     console.log("content: " + this.ct)
@@ -50,7 +54,7 @@ import {BskyAgent} from "@atproto/api"
                         text: this.ct,
                         langs: ["ja"]
                     })
-
+                    document.getElementById('er_log').innerHTML = "ID、パスでミスがない限り正常に投稿完了";
                     window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(this.ct))
                 }
             }
@@ -102,5 +106,9 @@ import {BskyAgent} from "@atproto/api"
     button {
         width: 500px;
         height: 50px;
+    }
+
+    .er_log {
+        height: 30px;
     }
 </style>
