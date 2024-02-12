@@ -19,7 +19,8 @@
 </template>
 
 <script>
-import {BskyAgent} from '@atproto/api'
+import pkg from '@atproto/api';
+const {BskyAgent} = pkg;
 
     export default {
         data () {
